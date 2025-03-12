@@ -22,10 +22,7 @@ class ProductController extends Controller
         
         ;
         $newUser= User::create($data);
-        return redirect(route('products.index'));
-        
-
-
+        return redirect(route('products.index'))
         
 
         
@@ -47,12 +44,6 @@ class ProductController extends Controller
     public function crUsers(){
         return view('products.index');
     }
-    public function even(){
-        return view('even');
-    }
-    // public function minitest(){
-    //     return view('minitest');
-    // }
     public function show($id)
     {
         return view('products.show', ['product' => User::find($id)]);
