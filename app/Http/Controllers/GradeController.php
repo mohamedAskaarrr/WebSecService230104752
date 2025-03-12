@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grade; // Ensure the Grade model exists in the App\Models namespace
+use App\Models\Grade; // Import the Grade model
 use Illuminate\Http\Request;
 
 class GradeController extends Controller
