@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'Role'
     ];
 
     /**
@@ -30,7 +31,15 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'remember_token',
+    ];
 
+    protected $attributes = [
+        'role' => 'user', // Default role
+    ];
+
+    protected $casts = [
+        'permissions' => 'array'
     ];
 
     /**
@@ -41,15 +50,45 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            // 'email_verified_at' => 'datetime'
-           
+            'email_verified_at' => 'datetime',
+          
         ];
     }
-    public function rules(){
-        [
-            'name'=> 'required|max:255',
-            'email'=> 'required|email',
-            'password' => 'required|min:8'
-        ];
+
+    // Add helper methods for role checking
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasPermission($permission)
+    {
+        // Simple role-based permission check
+        if ($this->Role === 'admin') {
+            return true; // Admin has all permissions
+        }
+        
+        if ($this->Role === 'employee') {
+            // Define employee permissions
+            $employeePermissions = ['edit_users'];
+            return in_array($permission, $employeePermissions);
+        }
+        
+        return false; // Regular users have no special permissions
+    }
+
+    public function isAdmin()
+    {
+        return $this->Role === 'admin';
+    }
+
+    public function isEmployee()
+    {
+        return $this->Role === 'employee';
+    }
+
+    public function isUser()
+    {
+        return $this->Role === 'user';
     }
 }

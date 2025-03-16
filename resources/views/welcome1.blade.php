@@ -41,9 +41,9 @@
 </head>
 
 <body>
-    @extends('layout')
+    
     @extends('UserProfile')
-    @extends('layouts.menu')
+    
   
 
     <!-- Navigation Bar -->
@@ -67,10 +67,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./create">Create</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./products/index">Current Users</a>
-                    </li>
-                    <li class="nav-item">
+                  <li class="nav-item">
                         <a class="nav-link" href="./exam/main">Exam</a>
                     </li>
                     <li class="nav-item">
@@ -81,6 +78,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./Userprofile">Username</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./Product1">Products</a>
                     </li>
                 </ul>
             </div>
