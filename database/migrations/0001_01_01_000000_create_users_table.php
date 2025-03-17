@@ -23,6 +23,7 @@ return new class extends Migration
                 'add user', 'edit user', 'delete user',
                 'add grade', 'edit grade', 'delete grade'
             ])->default('edit user');
+            $table->integer('age')->nullable();
             $table->timestamps();
         });
 

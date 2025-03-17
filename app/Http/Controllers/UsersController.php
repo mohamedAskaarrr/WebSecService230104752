@@ -32,7 +32,7 @@ class UsersController extends Controller {
     if ($user->role === 'admin') {
         return redirect("/");
     }
-    return redirect("/users/UserProfile");
+    return redirect("/");
  }
  
 public function viewProfile(){
@@ -42,19 +42,20 @@ use ValidatesRequests;
 
 public function doRegister(Request $request)
 {
-    $request->validate([
-        'name' => ['required', 'string'],
-        'email' => ['required', 'email', 'unique:users'],
-        'password' => ['required', 'confirmed'],
-    ]);
+        $request->validate([
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'confirmed'],
+            
+        ]);
 
-    // Create new user with default role = 'user'
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-        'role' => 'user', // Changed from role to role to match your database column
-    ]);
+        // Create new user with default role = 'user'
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => 'user', // Changed from role to role to match your database column
+        ]);
 
     // Log in the new user
     Auth::login($user);
@@ -282,7 +283,7 @@ public function updateProfile(Request $request)
         ]);
 
         $user = Auth::user();
-        if (!$user) {
+        if (!$user ) {
             return redirect()->back()->with('error', 'User not authenticated.');
         }
 

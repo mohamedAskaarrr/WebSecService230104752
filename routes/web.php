@@ -18,7 +18,7 @@ use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
     return view('welcome1');
-})->middleware('CheckUserProfile');
+});
 
 Route::get('/users/UserProfile', function () {
     return view('UserProfile');
