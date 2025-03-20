@@ -18,9 +18,11 @@ class product extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'model',
+        
         'code',
+        'name',
         'price',
+        'model',
         'description',
         'photo'
     ];

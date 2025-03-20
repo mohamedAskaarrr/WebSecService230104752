@@ -21,7 +21,8 @@
     </style>
 </head>
 <body>
-    <div class="container">
+  <div class="container">
+
         <div class="card mt-4">
             <div class="card-header text-center text-white" style="background-color: #007bff;">
                 <h2>User Profile</h2>
@@ -33,6 +34,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
+
 
                 @if(session('error'))
                     <div class="alert alert-danger">
@@ -81,10 +83,19 @@
 
                 <div class="row mb-3">
                     <div class="col-md-3" style="background-color: #f8f9fa;">
-                        Password (Hashed):
+                        password:
                     </div>
-                    <div class="col-md-9" style="color: #dc3545;">
+                    <div class="col-md-9">
                         {{ Auth::user()->password }}
+                    </div>
+                </div>
+                    </div>
+                    <div class="row mb-3">
+                    <div class="col-md-3" style="background-color: #f8f9fa;">
+                        Age:
+                    </div>
+                    <div class="col-md-9">
+                        {{ Auth::user()->age }}
                     </div>
                 </div>
 

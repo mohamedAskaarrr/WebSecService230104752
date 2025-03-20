@@ -90,12 +90,13 @@ Route::resource('grades', GradeController::class);
 Route::resource('exam', ExamController::class);
 
 
-// 
+
+
+
 
 
 
 // Admin Dashboard Route
-Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
 
 // User Profile Route
 Route::get('/UserProfile', [UsersController::class, 'userprofile'])->name('UserProfile');
@@ -120,7 +121,6 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 
-Route::get('Product1', [ProductController::class, 'showProduct'])->name('products_list');
 
 
 
@@ -139,9 +139,46 @@ Route::get('/Home', function () {
 });
 
 
+Route::get('/debug-role', [UsersController::class, 'debugRole']);
 
 
 
+
+use App\Http\Controllers\ProductsController;
+
+
+
+
+
+
+
+
+// Route::post('/product1/list', [ProductsController::class, 'add'])->name('productslist');
+
+
+
+// Route::put('/product1/update/{id}', [ProductsController::class, 'updateProduct'])->name('product1.update')
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+
+
+Route::get('/product', [ProductsController::class, 'index'])->name('product1.list');
+Route::get('/product/create', [ProductsController::class, 'create'])->name('product1.create');
+Route::post('/product', [ProductsController::class, 'store'])->name('product1.store');
+Route::get('/product/{product}/edit', [ProductsController::class, 'edit'])->name('product1.edit');
+Route::put('/product/{product}/update', [ProductsController::class, 'update'])->name('product1.update');
+Route::delete('/product/{product}/destroy', [ProductsController::class, 'destroy'])->name('product1.destroy');
 
 
 
@@ -276,22 +313,22 @@ Route::get('/transcript', function () {
 
 
 
-Route::get('products', [ProductController::class, 'list'])->name('products_list');
+// Route::get('products', [ProductController::class, 'list'])->name('products_list');
 
 // Admin routes
-Route::middleware(['auth', 'permission:edit_users'])->group(function () {
-    Route::get('/admin/users', [UsersController::class, 'showUsers'])->name('admin.users');
-    Route::get('/admin/users/{id}/edit', [UsersController::class, 'editUser'])->name('admin.users.edit');
-    Route::put('/admin/users/{id}', [UsersController::class, 'updateUser'])->name('admin.users.update');
-    Route::delete('/admin/users/{id}', [UsersController::class, 'deleteUser'])->name('admin.users.delete');
-    Route::post('/admin/users/{id}/change-password', [UsersController::class, 'changePassword'])->name('admin.users.password');
-});
+// Route::middleware(['auth', 'permission:edit_users'])->group(function () {
+//     Route::get('/admin/users', [UsersController::class, 'showUsers'])->name('admin.users');
+//     Route::get('/admin/users/{id}/edit', [UsersController::class, 'editUser'])->name('admin.users.edit');
+//     Route::put('/admin/users/{id}', [UsersController::class, 'updateUser'])->name('admin.users.update');
+//     Route::delete('/admin/users/{id}', [UsersController::class, 'deleteUser'])->name('admin.users.delete');
+//     Route::post('/admin/users/{id}/change-password', [UsersController::class, 'changePassword'])->name('admin.users.password');
+// });
 
 // Employee routes
-Route::middleware(['auth', 'role:employee'])->group(function () {
-    Route::get('/users/{id}/edit', [UsersController::class, 'editUser'])->name('users.edit');
-    Route::put('/users/{id}', [UsersController::class, 'updateUser'])->name('users.update');
-});
+// Route::middleware(['auth', 'role:employee'])->group(function () {
+//     Route::get('/users/{id}/edit', [UsersController::class, 'editUser'])->name('users.edit');
+//     Route::put('/users/{id}', [UsersController::class, 'updateUser'])->name('users.update');
+// });
 
 // User routes
 Route::middleware(['auth'])->group(function () {
@@ -300,10 +337,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/password', [UsersController::class, 'changePassword'])->name('user.password.update');
 });
 
-// Admin routes for roles and permissions management
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('roles', RoleController::class);
-    Route::resource('permissions', PermissionController::class);
-});
+// // Admin routes for roles and permissions management
+// Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+//     Route::resource('roles', RoleController::class);
+//     Route::resource('permissions', PermissionController::class);
+// });
 
 

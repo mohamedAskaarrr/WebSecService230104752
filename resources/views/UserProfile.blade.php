@@ -22,8 +22,7 @@
     </style>
 </head>
 <body>
-    @extends('layout')
-
+   
     @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -73,11 +72,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-3">
-                            <label class="col-md-4 col-form-label text-md-right">Role</label>
-                            <div class="col-md-6">
-                                <span>{{ Auth::user()->Role }}</span>
-                            </div>
                         </div>
                     </div>
                 </div>

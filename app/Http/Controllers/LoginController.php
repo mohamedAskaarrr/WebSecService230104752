@@ -2,7 +2,7 @@
 // app/Http/Controllers/Auth/LoginController.php
 // app/Http/Controllers/Auth/LoginController.php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,6 +16,7 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+           
         ]);
 
         // Attempt to log the user in
@@ -24,7 +25,8 @@ class LoginController extends Controller
             if (Auth::user()->role === 'admin') {
                 return redirect('/'); // Redirect admin to the home page
             } else {
-                return redirect('/userprofile'); // Redirect regular users to the user profile page
+
+                return redirect('/users/UerProfile'); // Redirect regular users to the user profile page
             }
         }
 

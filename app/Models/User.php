@@ -6,9 +6,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Artisan;
+use Spatie\Permission\Traits\HasRoles;
+
+Artisan::call('cache:clear');
+
+use Illuminate\Auth\Notifications\ResetPassword;    
 
 class User extends Authenticatable
 {
+
+    
+
+    use HasRoles;
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -21,8 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'Role',
-        'premission',
+        
          'age'
     ];
 
@@ -36,9 +46,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $attributes = [
-        'role' => 'user', // Default role
-    ];
 
     protected $casts = [
         'permissions' => 'array'
@@ -58,19 +65,14 @@ class User extends Authenticatable
     }
 
     // Add helper methods for role checking
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
     public function hasPermission($permission)
     {
         // Simple role-based permission check
-        if ($this->Role === 'admin') {
+        if ($this->role === 'admin') {
             return true; // Admin has all permissions
         }
         
-        if ($this->Role === 'employee') {
+        if ($this->role === 'employee') {
             // Define employee permissions
             $employeePermissions = ['edit_users'];
             return in_array($permission, $employeePermissions);
@@ -79,18 +81,9 @@ class User extends Authenticatable
         return false; // Regular users have no special permissions
     }
 
-    public function isAdmin()
-    {
-        return $this->Role === 'admin';
-    }
 
-    public function isEmployee()
-    {
-        return $this->Role === 'employee';
-    }
 
-    public function isUser()
-    {
-        return $this->Role === 'user';
-    }
 }
+
+
+

@@ -72,9 +72,12 @@ class ProductController extends Controller{
     }
     public function edit($id)
     {
+        dd(Auth::user()->getRoleNames()); // This will dump all roles assigned to the user
+
         $user = User::find($id);
         return view('products.edit', ['user' => $user]);
     }
+    
     public function update(Request $request, $id)
     {
         $data = $request->validate([
@@ -88,42 +91,42 @@ class ProductController extends Controller{
         return redirect(route('products.index'))->with('success', 'User updated successfully');
     }
 
-    public function listProduct()
-{
-    return view('Product1.list'); // Ensure you have a `welcome1.blade.php` file
-}
-public function save(Request $request, Product $product ): RedirectResponse {
-    $this->validate($request, [
-        'code' => ['required', 'string', 'max:32'],
-        'name' => ['required', 'string', 'max:128'],
-        'model' => ['required', 'string', 'max:256'],
-        'description' => ['required', 'string', 'max:1024'],
-        'price' => ['required', 'numeric'],
-        'photo' => ['nullable', 'image', 'max:1024'],
-    ]);
+//     public function listProduct()
+// {
+//     return view('Product1.list'); // Ensure you have a `welcome1.blade.php` file
+// }
+// public function save(Request $request, Product $product ): RedirectResponse {
+//     $this->validate($request, [
+//         'code' => ['required', 'string', 'max:32'],
+//         'name' => ['required', 'string', 'max:128'],
+//         'model' => ['required', 'string', 'max:256'],
+//         'description' => ['required', 'string', 'max:1024'],
+//         'price' => ['required', 'numeric'],
+//         'photo' => ['nullable', 'image', 'max:1024'],
+//     ]);
 
-    // Save logic here...
+//     // Save logic here...
 
-    $product = $product ?? new Product();
-    $product->fill($request->all());
-    $product->save();
+//     $product = $product ?? new Product();
+//     $product->fill($request->all());
+//     $product->save();
 
-    return redirect()->route('product1.list');
-}
-public function showProduct() {
-    $products = Product::all(); 
-    dd($products);
+//     return redirect()->route('product1.list');
+// }
+// public function showProduct() {
+//     $products = Product::all(); 
+//     dd($products);
     
-    // Fetch all products from database
-    return view('Product1.list', compact('products'));
-}
-    public function destroy($id)
-    {
-        $user = User::find($id);
-        $user->delete();
+//     // Fetch all products from database
+//     return view('Product1.list', compact('products'));
+// }
+//     public function destroy($id)
+//     {
+//         $user = User::find($id);
+//         $user->delete();
         
-        return redirect(route('products.index'))->with('success', 'User deleted successfully');
-    }
+//         return redirect(route('products.index'))->with('success', 'User deleted successfully');
+//     }
 
 //     public function delete(Request $request, Product $product)
 //     {

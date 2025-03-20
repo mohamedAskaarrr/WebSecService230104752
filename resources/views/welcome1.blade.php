@@ -42,9 +42,8 @@
 
 <body>
     
-    @extends('UserProfile')
-    
-  
+  @extends('layout')    
+  <!-- @extends('UserProfile') -->
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg">
@@ -53,36 +52,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./even">Even Numbers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./minitest">Minitest</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./create">Create</a>
-                    </li>
-                  <li class="nav-item">
-                        <a class="nav-link" href="./exam/main">Exam</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./grades">Grades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./register"></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Userprofile">Username</a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Product1">Products</a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -90,9 +60,8 @@
 
     <!-- Content Section -->
     <div class="container">
-        <h1>Welcome to Askar web Service</h1>
-        <div class="container">
-        <h1 class="welcome-msg">Welcome, {{ auth()->user()->name ?? 'Guest' }}!</h1>
+       <div class="container">
+        <h1 class="welcome-msg">hey {{ auth()->user()->name ?? 'Guest' }}!</h1>
         <p>Navigate using the menu above.</p>
     </div>
     </div>

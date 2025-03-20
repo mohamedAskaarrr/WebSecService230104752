@@ -27,36 +27,49 @@
 
 </head>
 <body>
+<div class="container d-flex flex-column align-items-center mt-4">
 
-<div class="container mt-4">
-
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs justify-content-center">
         <li class="nav-item">
             <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('evennumbers') ? 'active' : '' }}" href="{{ url('/even') }}">Even Numbers</a>
         </li>
-
         <li class="nav-item">
             <a class="nav-link {{ request()->is('multiplicationtable') ? 'active' : '' }}" href="{{ url('/multiplicationtable') }}">Multiplication Table</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('minitest') ? 'active' : '' }}" href="{{ url('/minitest') }}">MiniTest</a>
         </li>
-     
         <li class="nav-item">
             <a class="nav-link {{ request()->is('grades') ? 'active' : '' }}" href="{{ url('/grades') }}">Grades</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/products') }}">Users</a>
         </li>
-        <li>
-        <a class="register-button " href='./register'>Logout</a>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/product') }}">Products</a>
         </li>
+
     </ul>
 
-    <div class="mt-3">
+    <div class="d-flex mt-2">
+        <a class="register-button me-2" href="./users/UserProfile" style="right: 120px;;">Profile</a>
+        <a class="register-button" href="./register">Logout</a>
+    </div>
+
+
+
+
+</div>
+
+
+    <div class="mt-3"> 
+
+
+
+    
         <div class="card card-body">
             @yield('content')
         </div>

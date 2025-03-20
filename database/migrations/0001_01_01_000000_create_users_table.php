@@ -17,12 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('role')->default('user');
-            $table->set('permission', [
-                'add product', 'edit product', 'delete product',
-                'add user', 'edit user', 'delete user',
-                'add grade', 'edit grade', 'delete grade'
-            ])->default('edit user');
             $table->integer('age')->nullable();
             $table->timestamps();
         });

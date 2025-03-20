@@ -13,10 +13,13 @@ class Kernel extends HttpKernel
      *
      * @var array<string, class-string|string>
      */
-    protected $routeMiddleware = [
-        // ... existing middleware ...
-        'role' => \App\Http\Middleware\CheckRole::class,
-        'permission' => \App\Http\Middleware\CheckPermission::class,
-        'check.profile' => \App\Http\Middleware\CheckUserProfile::class,
-    ];
-} 
+//     protected $routeMiddleware = [
+//         // ... existing middleware ...
+//        'role' => \App\Http\Middlewares\RoleRedirectMiddleware::class,
+//         'permission' => \App\Http\Middleware\CheckPermission::class,
+//         'check.profile' => \App\Http\Middleware\CheckUserProfile::class,
+//     ];
+// } 
+
+
+}
