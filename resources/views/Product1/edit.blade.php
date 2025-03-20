@@ -4,51 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Edit Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Edit a Product</h1>
-    <div>
-        @if($errors->any())
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
+<body class="bg-light">
 
+    <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-header bg-warning text-dark">
+                <h2 class="text-center">Edit Product</h2>
+            </div>
+            <div class="card-body">
+                <!-- Display Errors -->
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-        @endif
+                <form method="post" action="{{ route('product1.update', ['product' => $product]) }}" enctype="multipart/form-data">
+                    @csrf 
+                    @method('put')
+
+                    <div class="mb-3">
+                        <label class="form-label">Code</label> 
+                        <input type="text" name="code" class="form-control" placeholder="Enter product code" value="{{ $product->code }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter product name" value="{{ $product->name }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Model</label>
+                        <input type="text" name="model" class="form-control" placeholder="Enter model" value="{{ $product->model }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Price</label>
+                        <input type="text" name="price" class="form-control" placeholder="Enter price" value="{{ $product->price }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" class="form-control" rows="3" placeholder="Enter description">{{ $product->description }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Current Photo</label>
+                        <div>
+                            <img src="{{ asset('public/images/' . $product->photo) }}" alt="{{ $product->name }}" width="100" class="img-thumbnail">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Upload New Photo</label>
+                        <input type="file" name="photo" class="form-control">
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success px-4">Update Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <form method="post" action="{{route('product1.update', ['product' => $product])}}">
-        @csrf 
-        @method('put')
-        <div>
-            <label>Code</label> 
-            <input type="text" name="code" placeholder="Code" value="{{$product->code}}" />
-        </div>
-        <div>
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Name" value="{{$product->name}}" />
-        </div>
-        <div>
-            <label>Model</label>
-            <input type="text" name="model  " placeholder="Model" value="{{$product->model}}" />
-        </div>
-        <div>
-            <label>Price</label>
-            <input type="text" name="price" placeholder="Price" value="{{$product->price}}" />
-        </div>
-        <div>
-            <label>Description</label>
-            <input type="text" name="description" placeholder="Description" value="{{$product->description}}" />
-        </div>
-        <div>
-            <label>Photo</label>
-            <input type="file" name="photo" placeholder="Photo" value="{{$product->photo}}" />
-        </div>  
-        <div>
-            <input type="submit" value="Update" />
-        </div>
-    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -4,59 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Product List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Product</h1>
-    <div>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Product List</h1>
+        
         @if(session()->has('success'))
-            <div>
-                {{session('success')}}
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
         @endif
-    </div>
-    <div>
-        <div>
-            <a href="{{route('product1.create')}}">Create a Product</a>
+
+        <div class="mb-3 text-end">
+            <a href="{{ route('product1.create') }}" class="btn btn-primary">Create a Product</a>
         </div>
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Code</th>
-                <th></th>Name</th>
-                <th>Model</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Photo</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            @foreach($products as $product )
-                <tr>
-                    <td>{{$product->id}}</td>
-                    <td>{{$product->code}}</td>
-                    <td>{{$product->name}}</td>
-                    <td>{{$product->model}}</td>
-                    <td>{{$product->price}}</td>
-                    <td>{{$product->description}}</td>
-                    
-                    <td>
-                        
-                    <img src="{{ asset('public/images/' . $product->photo) }}" alt="{{ $product->name }}" width="50">
-                    </td>
-                    <td>
-                        <a href="{{route('product1.edit', ['product' => $product])}}">Edit</a>
-                    </td>
-                    <td>
-                        <form method="post" action="{{route('product1.destroy', ['product' => $product])}}">
-                            @csrf 
-                            @method('delete')
-                            <input type="submit" value="Delete" />
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Model</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Photo</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($products as $product)
+                        <tr>
+                            <td>{{ $product->id }}</td>
+                            <td>{{ $product->code }}</td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->model }}</td>
+                            <td>${{ number_format($product->price, 2) }}</td>
+                            <td>{{ Str::limit($product->description, 50) }}</td>
+                            <td>
+                            <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" width="100">
+                            </td>
+                            <td>
+                                <a href="{{ route('product1.edit', ['product' => $product]) }}" class="btn btn-warning btn-sm">Edit</a>
+                            </td>
+                            <td>
+                                <form method="post" action="{{ route('product1.destroy', ['product' => $product]) }}" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                    @csrf 
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
