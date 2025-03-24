@@ -11,10 +11,10 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ExamController; // Add this line
 use App\Models\Grade;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ManageUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
-
 
 Route::get('/', function () {
     return view('welcome1');
@@ -68,6 +68,8 @@ Route::get('/UserProfile', function () {
 
 
 
+
+Route::get('/permission/index',[ManageUsers::class,'index'])->name('index');
 
 
 
@@ -131,8 +133,12 @@ Route::post('login', [UsersController::class, 'doLogin'])->name('do_login');
 Route::get('logout', [UsersController::class, 'doLogout'])->name('register');
 
 Route::get('/welcome1', function () {
+    
     return view('welcome1');
+
 });
+
+
 
 Route::get('/Home', function () {
     return view('Home');
@@ -180,6 +186,11 @@ Route::get('/product/{product}/edit', [ProductsController::class, 'edit'])->name
 Route::put('/product/{product}/update', [ProductsController::class, 'update'])->name('product1.update');
 Route::delete('/product/{product}/destroy', [ProductsController::class, 'destroy'])->name('product1.destroy');
 
+Route::get('/product/{product}/buy', [ProductsController::class, 'buy'])->name('product1.buy');
+
+
+
+Route::get('product1/Basket', [ProductsController::class, 'basket'])->name('Basket');
 
 
 
@@ -189,6 +200,8 @@ Route::delete('/product/{product}/destroy', [ProductsController::class, 'destroy
 
 
 
+
+Route::post('/user/{user}/credit', [UsersController::class, 'updateCredit'])->name('user.updateCredit');
 
 
 
@@ -344,3 +357,5 @@ Route::middleware(['auth'])->group(function () {
 // });
 
 
+
+Route::resource('permissions',App\Http\Controllers\ManageUsers::class);

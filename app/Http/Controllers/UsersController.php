@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-
+use Spatie\Permission\Models\Role;
 class UsersController extends Controller {
     use ValidatesRequests;
 
-    public function debugRole()
-    {
-        $user = User::find(1); // Change 1 to a valid user ID
-        dd($user->getRoleNames());
-    }
+    // public function debugRole()
+    // {
+    //     $user = User::find(1); // Change 1 to a valid user ID
+    //     dd($user->getRoleNames());
+    // }
 
     public function doLogin(Request $request) {
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -25,7 +25,7 @@ class UsersController extends Controller {
 
         $user = User::where('email', $request->email)->first();
         Auth::setUser($user);
-       
+    //    dd($request->all());
         return redirect("/");
     }
     
@@ -47,12 +47,14 @@ class UsersController extends Controller {
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        $user->assignRole('user');
 
         // Log in the new user
         Auth::login($user);
 
         // Redirect user to welcome1 page
         return redirect("/login");
+        
     }
 
     public function index()
@@ -248,4 +250,27 @@ class UsersController extends Controller {
             return redirect()->back()->with('error', 'An error occurred while updating the profile.');
         }
     }
+
+
+    public function updateCredit(Request $request, User $user)
+{
+    $request->validate([
+        'amount' => 'required|numeric',
+        'operation' => 'required|in:add,subtract'
+    ]);
+
+    if ($request->operation === 'subtract' && $user->credit < $request->amount) {
+        return redirect()->back()->with('error', 'Insufficient credit!');
+    }
+
+    // Update credit based on operation type
+    $user->credit = ($request->operation === 'add') 
+        ? $user->credit + $request->amount 
+        : $user->credit - $request->amount;
+
+    $user->save();
+
+    return redirect()->back()->with('success', 'User credit updated successfully!');
+}
+
 }

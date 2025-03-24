@@ -48,9 +48,15 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/products') }}">Users</a>
         </li>
+        
         <li class="nav-item">
             <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/product') }}">Products</a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('permissions') ? 'active' : '' }}" href="{{ url('/permission/index') }}">Permissoins</a>
+        </li>
+       
 
     </ul>
 

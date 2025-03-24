@@ -72,7 +72,7 @@ class ProductController extends Controller{
     }
     public function edit($id)
     {
-        dd(Auth::user()->getRoleNames()); // This will dump all roles assigned to the user
+        // This will dump all roles assigned to the user
 
         $user = User::find($id);
         return view('products.edit', ['user' => $user]);
