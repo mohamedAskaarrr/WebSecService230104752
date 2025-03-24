@@ -30,10 +30,10 @@
                         <th>Name</th>
                         <th>Model</th>
                         <th>Price</th>
+                        <th>Available Stock</th>
                         <th>Description</th>
                         <th>Photo</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,21 +44,36 @@
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->model }}</td>
                             <td>${{ number_format($product->price, 2) }}</td>
+                            <td>{{ $product->available_stock }} in stock</td>
                             <td>{{ Str::limit($product->description, 50) }}</td>
                             <td>
-                            <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" width="100">
+                                <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" width="100">
                             </td>
                             <td>
-                                <a href="{{ route('product1.edit', ['product' => $product]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <div class="d-flex gap-2">
+                                    @can('edit')
+                                        <a href="{{ route('product1.edit', ['product' => $product]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    @endcan
+                                    
+                                    <form method="post" action="{{ route('product1.destroy', ['product' => $product]) }}" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                        @csrf 
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+
+                                    <td>
+                            <form method="GET" action="{{ route('product1.buy', ['product' => $product]) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm">Buy</button>
+                            </form>
+                        </td>                </div>
                             </td>
-                            <td>
-                                <form method="post" action="{{ route('product1.destroy', ['product' => $product]) }}" onsubmit="return confirm('Are you sure you want to delete this product?');">
-                                    @csrf 
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </td>
+
                         </tr>
+
+                        <div class="mb-3 text-end">
+                                <a href="{{ url('product1/Basket') }}" class="btn btn-primary">Basket</a>
+                            </div>
                     @endforeach
                 </tbody>
             </table>
