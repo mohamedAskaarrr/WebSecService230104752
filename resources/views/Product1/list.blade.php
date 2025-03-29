@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    
     <div class="container mt-5">
         <h1 class="text-center mb-4">Product List</h1>
         
@@ -46,14 +47,15 @@
                             <td>${{ number_format($product->price, 2) }}</td>
                             <td>{{ $product->available_stock }} in stock</td>
                             <td>{{ Str::limit($product->description, 50) }}</td>
+                           
                             <td>
-                                <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" width="100">
+                                <img src="{{ asset('images/' . $product->photo) }}" alt="{{ $product->name }}" width="100">
                             </td>
                             <td>
                                 <div class="d-flex gap-2">
-                                    @can('edit')
+                                    
                                         <a href="{{ route('product1.edit', ['product' => $product]) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    @endcan
+                               
                                     
                                     <form method="post" action="{{ route('product1.destroy', ['product' => $product]) }}" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                         @csrf 

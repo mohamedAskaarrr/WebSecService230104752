@@ -20,6 +20,8 @@ Route::get('/', function () {
     return view('welcome1');
 });
 
+Route::get('3M',[LoginController::class,'onlinestore']); 
+
 Route::get('/users/UserProfile', function () {
     return view('UserProfile');
 });
@@ -358,4 +360,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::resource('permissions',App\Http\Controllers\ManageUsers::class);
+Route::resource('permissions', App\Http\Controllers\ManageUsers::class);
+
+Route::resource('Roles', App\Http\Controllers\RoleController::class);

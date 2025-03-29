@@ -9,7 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
+
+
 {
+
+
+
+    public function onlinestore(){
+        return view('frontend.master');
+    }
     public function login(Request $request)
     {
         // Validate the login request

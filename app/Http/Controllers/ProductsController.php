@@ -79,7 +79,7 @@ public function index(){
 
     public function update(Product $product, Request $request){
 
-            if (!auth()->user()->hasPermissionTo('edit')) {
+            if (Auth::user()->hasPermissionTo('edit')) {
             abort(401);
             
             $product->delete();

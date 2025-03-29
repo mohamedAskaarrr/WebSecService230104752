@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    
+@extends('role-permission.role.navbar')
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -34,8 +36,12 @@
                                         <td>{{ $permission->id }}</td>
                                         <td>{{ $permission->name }}</td>
                                         <td>
-                                            <a href="{{ url('permissions/edit/'.$permission->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="{{ url('permissions/delete/'.$permission->id) }}" class="btn btn-sm btn-danger">Delete</a>
+                                            <a href="{{ url('permissions/'.$permission->id.'/edit') }}" class="btn btn-sm btn-primary">Edit</a>
+                                            <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this permission?')">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

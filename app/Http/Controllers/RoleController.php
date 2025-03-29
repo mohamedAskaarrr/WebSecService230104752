@@ -2,70 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\Permission;
 use Illuminate\Http\Request;
-
+use Spatie\Permission\Models\Role;
 class RoleController extends Controller
 {
-    public function index()
-    {
-        $roles = Role::with('permissions')->get();
-        return view('admin.roles.index', compact('roles'));
+    //
+    public function index(){
+        $Roles = Role::all();
+
+        return view('role.index',
+    [
+        'Roles' => $Roles
+    ]);
+}
+       
+    
+    public function create(){
+
+        return view('role.create');
+    }
+    public function edit(Role $Role ){
+        // return $Role;
+            
+        // return $Role;
+        return view('Role.edit',compact('Role'));
+          
+
+       
+    }
+    public function store(Request $request){
+        $request->validate([
+                'name' => 'required', 'unique:permissoins,name'
+        ]);
+        Role::create([
+            'name'=>$request -> name            
+
+        ]);
+        return redirect('Roles')->with('status','Role created successfully');
     }
 
-    public function create()
-    {
-        $permissions = Permission::all();
-        return view('admin.roles.create', compact('permissions'));
-    }
 
-    public function store(Request $request)
+    public function update(Request $request, Role $Role)
     {
         $request->validate([
-            'name' => 'required|unique:roles',
-            'description' => 'nullable',
-            'permissions' => 'array'
+            'name' => 'required|unique:Roles,name,'.$Role->id
         ]);
 
-        $role = Role::create($request->only(['name', 'description']));
-        $role->permissions()->sync($request->permissions);
-
-        return redirect()->route('admin.roles.index')->with('success', 'Role created successfully');
-    }
-
-    public function edit(Role $role)
-    {
-        $permissions = Permission::all();
-        return view('admin.roles.edit', compact('role', 'permissions'));
-    }
-
-    public function update(Request $request, Role $role)
-    {
-        $request->validate([
-            'name' => 'required|unique:roles,name,' . $role->id,
-            'description' => 'nullable',
-            'permissions' => 'array'
+        $Role->update([
+            'name' => $request->name            
         ]);
 
-        $role->update($request->only(['name', 'description']));
-        $role->permissions()->sync($request->permissions);
-
-        return redirect()->route('admin.roles.index')->with('success', 'Role updated successfully');
+        return redirect('Roles')->with('status', 'Role updated successfully');
     }
 
-    public function destroy(Role $role)
-    {
-        if ($role->users()->count() > 0) {
-            return back()->with('error', 'Cannot delete role with assigned users');
-        }
+    public function Destroy($RoleID){
+        $Role = Role::find($RoleID);
+        $Role->delete();
         
-        $role->delete();
-        return redirect()->route('admin.roles.index')->with('success', 'Role deleted successfully');
+        return redirect('Roles')->with('status', 'Role Deleted successfully');
+        
     }
-} 
 
 
 
-
-
+}
