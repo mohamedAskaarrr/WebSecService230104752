@@ -33,24 +33,20 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->is('evennumbers') ? 'active' : '' }}" href="{{ url('/even') }}">Even Numbers</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->is('multiplicationtable') ? 'active' : '' }}" href="{{ url('/multiplicationtable') }}">Multiplication Table</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->is('minitest') ? 'active' : '' }}" href="{{ url('/minitest') }}">MiniTest</a>
-        </li>
+ 
         <li class="nav-item">
             <a class="nav-link {{ request()->is('grades') ? 'active' : '' }}" href="{{ url('/grades') }}">Grades</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/products') }}">Users</a>
+            <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/products/index') }}">Users</a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/product') }}">Products</a>
+            <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/products') }}">show online store</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ url('/product') }}">Products management</a>
         </li>
 
         <li class="nav-item">

@@ -10,7 +10,7 @@ class RoleController extends Controller
     public function index(){
         $Roles = Role::all();
 
-        return view('role.index',
+        return view('role-permission.role.index',
     [
         'Roles' => $Roles
     ]);
@@ -19,20 +19,20 @@ class RoleController extends Controller
     
     public function create(){
 
-        return view('role.create');
+        return view('role-permission.role.create');
     }
     public function edit(Role $Role ){
         // return $Role;
             
         // return $Role;
-        return view('Role.edit',compact('Role'));
+        return view('role-permission.role.edit',compact('Role'));
           
 
        
     }
     public function store(Request $request){
         $request->validate([
-                'name' => 'required', 'unique:permissoins,name'
+                'name' => 'required', 'unique:Roles,name'
         ]);
         Role::create([
             'name'=>$request -> name            

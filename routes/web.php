@@ -83,7 +83,7 @@ Route::get('/create',[ProductController::class,'create'])->name('create');
 
 Route::post('/product/store',[ProductController::class,'store'])->name('products.store');
 
-Route::get('/products/index',[ProductController::class,'index'])->name('index');
+Route::get('/products/index',[ProductController::class,'search'])->name('index');
 
 // Add these resource routes for products
 Route::resource('products', ProductController::class);

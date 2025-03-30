@@ -37,14 +37,14 @@
                     </form> -->
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Create Permission</h4>
-                        <a href="{{ url('permissions') }}" class="btn btn-danger">Back</a>
+                        <h4 class="mb-0">Create Role</h4>
+                        <a href="{{ url('/') }}" class="btn btn-danger">Back</a>
                     </div>
                     <div class="card-body">
-                        <form action="{{ url('permissions') }}" method="POST">
+                        <form action="{{ url('Roles') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="name" class="form-label">Permission Name</label>
+                                <label for="name" class="form-label">Role Name</label>
                                 <input type="text" name="name" class="form-control" required>
                             </div>
                             <div class="mb-3 text-end">
