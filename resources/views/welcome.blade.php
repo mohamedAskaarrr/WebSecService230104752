@@ -110,11 +110,11 @@
             <!-- Dropdown menu example -->
            
             <!-- Basket link -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('products.basket') }}">
                     <i class="bi bi-cart4 me-2"></i> Basket
                 </a>
-            </li>
+            </li> -->
         </ul>
 
         <!-- Authentication Section -->

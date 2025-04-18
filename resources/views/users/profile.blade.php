@@ -65,13 +65,13 @@
                 </table>
 
                 <div class="d-flex justify-content-end gap-3">
-                    @if(auth()->user()->hasPermissionTo('admin_users') || auth()->id() == $user->id)
+                    @if(Auth::user()->hasPermissionTo('admin_users') || Auth::id() == $user->id)
                         <a class="btn btn-outline-primary" href='{{ route('edit_password', $user->id) }}'>
                             <i class="fas fa-lock me-1"></i> Change Password
                         </a>
                     @endif
 
-                    @if(auth()->user()->hasPermissionTo('edit_users') || auth()->id() == $user->id)
+                    @if(Auth::user()->hasPermissionTo('edit_users') || Auth::id() == $user->id)
                         <a href="{{ route('users_edit', $user->id) }}" class="btn btn-success">
                             <i class="fas fa-edit me-1"></i> Edit
                         </a>

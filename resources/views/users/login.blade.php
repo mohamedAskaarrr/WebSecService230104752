@@ -36,6 +36,27 @@
         </div>
       </form>
       
+
+
+
+      <div class="form-group mb-2">
+      <!-- <button type="submit" Class="btn btn-primary"> 
+ Login
+ </button> -->
+ <a href=
+ "{{route('login_with_google')}}" 
+
+ 
+class=
+ "btn btn-success">
+ Login with Google </a>
+
+      </div>
+
+
+
+
+      
       <div class="text-center mt-3">
         <small>Don't have an account? <a href="{{ route('register') }}">Register here</a></small>
       </div>

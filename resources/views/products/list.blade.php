@@ -106,14 +106,39 @@
                         <tr><th>Code</th><td>{{ $product->code }}</td></tr>
                         <tr><th>Price</th><td>${{ $product->price }}</td></tr>
                         <tr><th>Description</th><td>{{ $product->description }}</td></tr>
-                        <tr><th>Stock</th><td>{{ $product->available_stock }}</td></tr>
+                        <tr><th>Stock</th><td>{{ $product->available_stock }}  
+                            
+                        <!-- <form action="{{ route('products.addstock', $product->id) }}" method="POST"> -->
+                        @csrf
+                        <div class="col-6">
+                <!-- <label for="price" class="form-label">add:</label>
+                <input type="number" class="form-control" placeholder="Product Price" name="price" required value="{{$product->stock}}">
+            </div> -->
+
+                   @role('Employee')            
+            <form action="{{ route('products.addstock', $product->id) }}" method="POST">
+            @csrf
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="stock" placeholder="Enter Stock  Amount" >
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Add stock
+                        </button>
+                    </div>
+                </form>
+
+                
+               @endrole
+            
+           
+                        
+
                     </table>
 
                     @if($product->available_stock > 0)
                     <form action="{{ route('products.addTobasket', $product->id) }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-success">
-                            🧺 Add To Basket
+                            Buy
                         </button>
                     </form>
                     @else

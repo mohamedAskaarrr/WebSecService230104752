@@ -11,7 +11,6 @@ use App\Models\Product;
 use App\Models\Basket;
 
 
-
 class ProductsController extends Controller {
 
 	use ValidatesRequests;
@@ -22,6 +21,8 @@ class ProductsController extends Controller {
     }
 
 	public function list(Request $request) {
+        
+
 
 		$query = Product::select("products.*");
 
@@ -118,7 +119,11 @@ class ProductsController extends Controller {
         'product_name' => $product->name,
 		
         'quantity' => 1
+
     ]);
+
+
+    
 
     // Uncomment this if you want to use the many-to-many relationship
     // $basket->products()->syncWithoutDetaching([
@@ -126,14 +131,53 @@ class ProductsController extends Controller {
     // ]);
 
 	
-    return redirect()->route('products.basket')->with('success', 'Product added to basket!');
+    // return redirect()->route('products.basket')->with('success', 'Product added to basket!');
+    return redirect()->route('products_list')->with('success', 'Thank you for your purchase!');
 }
 
 
 
 
-	
 
+public function purchase(Product $product)
+{
+    $user = Auth::user();
+
+    // Check if the user is logged in and has enough credit
+    if (!$user) {
+        return redirect()->route('login')->with('warning', 'You need to be logged in.');
+    }
+
+    if ($user->credit < $product->price) {
+        return redirect()->back()->with('warning', '⚠️ Not enough credit.');
+    }
+
+    // Check if the product is in stock
+    if ($product->available_stock <= 0) {
+        return redirect()->back()->with('warning', '⚠️ Product out of stock.');
+    }
+
+    // Deduct credit and decrease product stock using DB::update
+    DB::table('users')->where('id', $user->id)->decrement('credit', $product->price);
+    DB::table('products')->where('id', $product->id)->decrement('available_stock', 1);
+
+    // Retrieve or create basket, then add product
+	$user = Auth::user();
+
+	$basket = Basket::firstOrCreate([
+        'user_id' => $user->id,
+        'product_id' => $product->id,
+        'product_name' => $product->name,
+		
+        'quantity' => 1
+
+    ]);
+
+
+
+
+	
+}
 
 public function basket()
 {
@@ -150,18 +194,6 @@ public function basket()
     return view('products.basket', compact('basketItems'));
 }
 
-public function removeFromBasket(Basket $basket)
-{
-    $user = Auth::user();
-    
-    if (!$user || $basket->user_id !== $user->id) {
-        return redirect()->back()->with('warning', 'Unauthorized action.');
-    }
-
-    $basket->delete();
-    
-    return redirect()->route('products.basket')->with('success', 'Item removed from basket.');
-}
 
 public function checkout()
 {
@@ -179,9 +211,45 @@ public function checkout()
 
     // Process the checkout (you can add your checkout logic here)
     // For now, we'll just clear the basket
-    Basket::where('user_id', $user->id)->delete();
+    Basket::where('user_id', $user->id);
     
     return redirect()->route('products.basket')->with('success', 'Thank you for your purchase!');
 }
 
-} 
+
+
+
+
+
+
+
+public function addstock(Request $request, product $product)
+
+{  
+  
+    if (auth()->user()->hasRole('Employee')){
+        
+    }
+    
+    $request->validate([
+        'stock' => 'required|numeric|min:1'
+    ]);
+
+
+    $product->available_stock += $request->stock;
+
+    // Save the updated credit balance
+    $product->save();
+
+    return redirect()->back()->with('success', 'Stock updated successfully!');
+}
+
+
+
+
+
+
+
+
+
+}

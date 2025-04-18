@@ -16,8 +16,11 @@ Route::post('users/save/{user}', [UsersController::class, 'save'])->name('users_
 Route::get('users/delete/{user}', [UsersController::class, 'delete'])->name('users_delete');
 Route::get('users/edit_password/{user?}', [UsersController::class, 'editPassword'])->name('edit_password');
 Route::post('users/save_password/{user}', [UsersController::class, 'savePassword'])->name('save_password');
+Route::post('users/unblockUser/{user}', [UsersController::class,'unblockUser'])->name('unblockUser');
+Route::get('verify', [UsersController::class, 'verify'])->name('verify');
 
-    Route::post('users/add-credit/{user}', [UsersController::class, 'savePassword'])->name('users.add_credit');
+    Route::post('users/purchase/{user}', [UsersController::class, 'purchase'])->name('usersPurchase');
+    Route::post('users/reset-credit/{user}', [UsersController::class, 'resetCredit'])->name('users.reset_credit');
 
 
 Route::get('products', [ProductsController::class, 'list'])->name('products_list');
@@ -34,7 +37,9 @@ Route::delete('/basket/{basket}', [ProductsController::class, 'removeFromBasket'
 Route::post('/checkout', [ProductsController::class, 'checkout'])->name('products.checkout');
 Route::post('/products/{product}/buy', [ProductsController::class, 'buy'])->name('products.buy');
 
+Route::post('/products/{product}/stock', [ProductsController::class, 'addstock'])->name('products.addstock');
 
+    // Route::get('profile/{user?}', [UsersController::class, 'resetCredit'])->name('profile');
 
 Route::get('/', function () {
     return view('welcome');
@@ -57,3 +62,13 @@ Route::get('/prime', function () {
 Route::get('/test', function () {
     return view('test');
 });
+
+
+
+
+
+
+Route::get('/auth/google', 
+[UsersController::class, 'redirectToGoogle'])->name('login_with_google');
+ Route::get('/auth/google/callback', 
+[UsersController::class, 'handleGoogleCallback']);

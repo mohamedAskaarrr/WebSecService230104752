@@ -113,6 +113,63 @@ $(document).ready(function(){
   $("#clean_roles").click(function(){
     $('#roles').val([]);
   });
+  
+  // Reset Credit Button
+  $("#reset-credit-btn").click(function(){
+    const userId = $(this).data('user-id');
+    if(confirm('Are you sure you want to reset this user\'s credit to 0?')) {
+      $.ajax({
+        url: '/users/reset-credit/' + userId,
+        type: 'POST',
+        data: {
+          _token: '{{ csrf_token() }}'
+        },
+        success: function(response) {
+          if(response.success) {
+            alert('Credit reset successfully!');
+            location.reload();
+          } else {
+            alert('Error: ' + response.message);
+          }
+        },
+        error: function(xhr) {
+          alert('Error: ' + xhr.responseJSON.message);
+        }
+      });
+    }
+  });
+  
+  // Add Credit Form Submit
+  $("#add-credit-form").submit(function(e){
+    e.preventDefault();
+    const userId = $(this).data('user-id');
+    const creditAmount = $(this).find('input[name="credit"]').val();
+    
+    if(creditAmount <= 0) {
+      alert('Please enter a positive credit amount');
+      return;
+    }
+    
+    $.ajax({
+      url: '/users/add-credit/' + userId,
+      type: 'POST',
+      data: {
+        _token: '{{ csrf_token() }}',
+        credit: creditAmount
+      },
+      success: function(response) {
+        if(response.success) {
+          alert('Credit added successfully!');
+          location.reload();
+        } else {
+          alert('Error: ' + response.message);
+        }
+      },
+      error: function(xhr) {
+        alert('Error: ' + xhr.responseJSON.message);
+      }
+    });
+  });
 });
 </script>
 
@@ -170,10 +227,30 @@ $(document).ready(function(){
         <!-- Credit Amount -->
         <div class="row mb-3">
             <div class="col-12">
-                <label for="credit" class="form-label">Credit Amount:</label>
-                <input type="number" class="form-control" name="credit" placeholder="Enter Credit Amount" required min="1">
+                <label for="credit" class="form-label">Current Credit: <span class="text-success fw-bold">${{ $user->credit }}</span></label>
             </div>
         </div>
+        
+        <div class="row mb-3">
+            <div class="col-12">
+                <form id="add-credit-form" data-user-id="{{ $user->id }}">
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="credit" placeholder="Enter Credit Amount" >
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Add Credit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- <div class="row mb-3">
+            <div class="col-12">
+                <button type="button" id="reset-credit-btn" class="btn btn-warning" data-user-id="{{ $user->id }}">
+                    <i class="fas fa-redo"></i> Reset Credit
+                </button>
+            </div>
+        </div> -->
         @endcan
 
         <!-- Submit Button -->
@@ -187,3 +264,18 @@ $(document).ready(function(){
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

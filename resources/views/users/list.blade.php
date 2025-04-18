@@ -54,6 +54,12 @@
             @can('admin_users')
               <a class="btn btn-warning btn-sm" href="{{ route('edit_password', [$user->id]) }}">Change Password</a>
             @endcan
+            @role('Employee')
+            <form action="{{ route('unblockUser',$user->id) }}" method="post">
+              <button class="btn btn-warning" type="submit">unblock User </button>
+
+            </form>
+            @endrole
             @can('delete_users')
               <a class="btn btn-danger btn-sm" href="{{ route('users_delete', [$user->id]) }}" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
             @endcan

@@ -4,8 +4,6 @@
 
 @section('content')
 <div class="container mt-5 mb-5">
-    <h2 class="mb-4 text-success text-center">🧺 Your Basket</h2>
-
     @if(session('success'))
         <div class="alert alert-success shadow-sm text-center">
             {{ session('success') }}
