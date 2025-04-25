@@ -1,75 +1,117 @@
 @extends('layouts.master')
 
-@section('title', 'Users')
+@section('title', 'Users List')
 
 @section('content')
 
-<div class="row mt-4">
-    <div class="col col-12">
-        <h1 class="text-success">Users</h1>
-    </div>
-</div>
-
-<form>
+<div class="container py-4">
     <div class="row mb-4">
-        <div class="col col-sm-4">
-            <input name="keywords" type="text" class="form-control" placeholder="Search Keywords" value="{{ request()->keywords }}" />
+        <div class="col-md-6">
+            <h2 class="text-primary"><i class="fas fa-users me-2"></i>Users List</h2>
         </div>
-        <div class="col col-sm-2">
-            <button type="submit" class="btn btn-success w-100">Search</button>
-        </div>
-        <div class="col col-sm-2">
-            <button type="reset" class="btn btn-danger w-100">Reset</button>
+        <div class="col-md-6 text-end">
+            <form action="{{ route('users') }}" method="GET" class="d-flex gap-2">
+                <input type="text" name="keywords" class="form-control" placeholder="Search users..." value="{{ request()->keywords }}">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
         </div>
     </div>
-</form>
 
-<div class="card mt-4 shadow-sm rounded">
-  <div class="card-body">
-    <table class="table table-striped table-bordered table-hover text-center">
-      <thead class="table-success">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Roles</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach($users as $user)
-        <tr>
-          <td>{{ $user->id }}</td>
-          <td>{{ $user->name }}</td>
-          <td>{{ $user->email }}</td>
-          <td>
-            @foreach($user->roles as $role)
-              <span class="badge bg-primary">{{ $role->name }}</span>
-            @endforeach
-          </td>
-          <td>
-            @can('edit_users')
-              <a class="btn btn-primary btn-sm" href="{{ route('users_edit', [$user->id]) }}">Edit</a>
-            @endcan
-            @can('admin_users')
-              <a class="btn btn-warning btn-sm" href="{{ route('edit_password', [$user->id]) }}">Change Password</a>
-            @endcan
-            @role('Employee')
-            <form action="{{ route('unblockUser',$user->id) }}" method="post">
-              <button class="btn btn-warning" type="submit">unblock User </button>
-
-            </form>
-            @endrole
-            @can('delete_users')
-              <a class="btn btn-danger btn-sm" href="{{ route('users_delete', [$user->id]) }}" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
-            @endcan
-          </td>
-        </tr>
-        @endforeach
-      </tbody>
-    </table>
-  </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($users as $user)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>
+                        @foreach($user->roles as $role)
+                        <span class="badge bg-primary">{{ $role->name }}</span>
+                        @endforeach
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{{ route('profile', $user->id) }}" class="btn btn-sm btn-info me-2">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                            @can('edit_users')
+                            <a href="{{ route('users_edit', $user->id) }}" class="btn btn-sm btn-warning me-2">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            @endcan
+                            @can('delete_users')
+                            <a href="{{ route('users_delete', $user->id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                            @endcan
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<style>
+    .table {
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+    }
+
+    .table thead th {
+        background-color: var(--dark-bg);
+        color: var(--text-color);
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .table tbody tr {
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-color);
+    }
+
+    .table tbody tr:hover {
+        background-color: var(--dropdown-hover-bg);
+    }
+
+    .badge {
+        transition: background-color 0.3s ease;
+    }
+
+    .form-control {
+        background-color: var(--card-bg);
+        border-color: var(--border-color);
+        color: var(--text-color);
+    }
+
+    .form-control:focus {
+        background-color: var(--card-bg);
+        border-color: var(--primary-color);
+        color: var(--text-color);
+        box-shadow: 0 0 0 0.25rem rgba(var(--primary-color), 0.25);
+    }
+
+    .btn-group .btn {
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .text-primary {
+        color: var(--primary-color) !important;
+    }
+</style>
 
 @endsection
 

@@ -86,8 +86,9 @@
             </div>
             <button type="submit" class="btn">Login</button>
         </form>
+        
         <div class="register-link">
-            <p>Don't have an account? <a href="./register">Register</a></p>
+            <p>Don't have an account? <a href="./register" class="btn btn-primary">Register</a></p>
         </div>
     </div>
 </body>

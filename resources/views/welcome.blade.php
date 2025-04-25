@@ -1,12 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Welcome to Askarr Store</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --accent-color: #FFC107;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --card-bg: #ffffff;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --navbar-bg: #ffffff;
+            --navbar-text: #333;
+            --dropdown-bg: #ffffff;
+            --dropdown-text: #333;
+            --dropdown-hover-bg: #f8f9fa;
+            --dropdown-hover-text: #4CAF50;
+            --border-color: #dee2e6;
+            --sidebar-bg: #A5D6A7;
+            --sidebar-text: #388E3C;
+            --sidebar-hover-bg: #66BB6A;
+            --sidebar-hover-text: #ffffff;
+            --sidebar-active-bg: #66BB6A;
+            --sidebar-active-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #66bb6a;
+            --secondary-color: #42a5f5;
+            --accent-color: #ffca28;
+            --text-color: #e0e0e0;
+            --light-bg: #121212;
+            --dark-bg: #1e1e1e;
+            --success-color: #4caf50;
+            --danger-color: #f44336;
+            --warning-color: #ff9800;
+            --info-color: #03a9f4;
+            --card-bg: #1e1e1e;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            --navbar-bg: #1e1e1e;
+            --navbar-text: #e0e0e0;
+            --dropdown-bg: #1e1e1e;
+            --dropdown-text: #e0e0e0;
+            --dropdown-hover-bg: #2d2d2d;
+            --dropdown-hover-text: #66bb6a;
+            --border-color: #333;
+            --sidebar-bg: #1e3a1e;
+            --sidebar-text: #a5d6a7;
+            --sidebar-hover-bg: #2d5a2d;
+            --sidebar-hover-text: #ffffff;
+            --sidebar-active-bg: #2d5a2d;
+            --sidebar-active-text: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
         /* Sidebar styles */
         .sidebar {
             position: fixed;
@@ -14,33 +78,33 @@
             bottom: 0;
             left: 0;
             width: 250px;
-            background-color: #A5D6A7; /* Soft Green background */
+            background-color: var(--sidebar-bg);
             padding-top: 20px;
-            transition: all 0.3s ease; /* Animation for sidebar transition */
+            transition: all 0.3s ease;
             box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.1);
         }
         .sidebar .nav-link {
             font-size: 18px;
             padding: 10px 15px;
-            color: #388E3C; /* Green text */
-            transition: background-color 0.3s, color 0.3s; /* Animation for text and background on hover */
+            color: var(--sidebar-text);
+            transition: background-color 0.3s, color 0.3s;
         }
         .sidebar .nav-link:hover {
-            background-color: #66BB6A; /* Darker green background on hover */
-            color: #fff; /* White text on hover */
+            background-color: var(--sidebar-hover-bg);
+            color: var(--sidebar-hover-text);
         }
         .sidebar .nav-link i {
-            color: #388E3C; /* Green color for icons */
+            color: var(--sidebar-text);
         }
         .sidebar .nav-link:hover i {
-            color: #fff; /* White icons when hovered */
+            color: var(--sidebar-hover-text);
         }
         .sidebar .nav-item.active {
-            background-color: #66BB6A; /* Slightly darker green for active item */
-            color: white;
+            background-color: var(--sidebar-active-bg);
+            color: var(--sidebar-active-text);
         }
         .sidebar .nav-item.active i {
-            color: white;
+            color: var(--sidebar-active-text);
         }
         .main-content {
             margin-left: 250px;
@@ -48,16 +112,58 @@
             transition: margin-left 0.3s ease;
         }
         .profile-header {
-            background-color: #f8f9fa;
+            background-color: var(--card-bg);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--card-shadow);
         }
         .profile-header h4 {
             font-weight: bold;
+            color: var(--text-color);
         }
         .profile-table td, .profile-table th {
             vertical-align: middle;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--navbar-bg) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar .nav-link {
+            color: var(--navbar-text) !important;
+        }
+
+        .dropdown-menu {
+            background-color: var(--dropdown-bg);
+            border: none;
+            box-shadow: var(--card-shadow);
+        }
+
+        .dropdown-item {
+            color: var(--dropdown-text);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--dropdown-hover-bg);
+            color: var(--dropdown-hover-text);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: none;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-body h4 {
+            color: var(--primary-color);
         }
 
         @media (max-width: 768px) {
@@ -139,7 +245,7 @@
     <!-- Main content -->
     <div class="main-content">
         <!-- Navbar with user profile -->
-        <nav class="navbar navbar-expand-sm bg-light">
+        <nav class="navbar navbar-expand-sm">
             <div class="container-fluid">
                 <ul class="navbar-nav">
                     @auth
@@ -152,6 +258,11 @@
                             <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger" href="{{ route('do_logout') }}">Logout</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#" id="darkModeToggle">
+                                    <i class="fas fa-moon me-2"></i>Dark Mode
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     @else
@@ -166,16 +277,70 @@
             </div>
         </nav>
 
-        <div class="card m-4">
-      <div class="card-body">
-        <h4 aria-flowto="0" style="color:rgb(97, 134, 98);"> Welcome to Home Page !</h4>
-        
-      </div>
-    </div>
+        <div class="card m-4" data-aos="fade-up">
+            <div class="card-body">
+                <h4 aria-flowto="0">Welcome to Home Page!</h4>
+                <p>This is the home page of Askarr Store. Browse our products and enjoy your shopping experience.</p>
+            </div>
+        </div>
     </div>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+
+            // Dark mode functionality
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const htmlElement = document.documentElement;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-theme', savedTheme);
+            
+            // Update icon based on current theme
+            updateDarkModeIcon(savedTheme);
+            
+            // Toggle dark mode
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const currentTheme = htmlElement.getAttribute('data-theme');
+                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    
+                    htmlElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    
+                    updateDarkModeIcon(newTheme);
+                });
+            }
+            
+            // Update dark mode icon
+            function updateDarkModeIcon(theme) {
+                if (darkModeToggle) {
+                    const icon = darkModeToggle.querySelector('i');
+                    if (theme === 'dark') {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                        darkModeToggle.innerHTML = '<i class="fas fa-sun me-2"></i>Light Mode';
+                    } else {
+                        icon.classList.remove('fa-sun');
+                        icon.classList.add('fa-moon');
+                        darkModeToggle.innerHTML = '<i class="fas fa-moon me-2"></i>Dark Mode';
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
 

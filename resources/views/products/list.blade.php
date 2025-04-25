@@ -78,7 +78,7 @@
     </form>
 
     @foreach($products as $product)
-    <div class="card shadow-sm mb-4 border-0 rounded-lg product-card">
+    <div class="card shadow-sm mb-4 border-0 rounded-lg product-card" data-aos="fade-up">
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-4 mb-3 mb-lg-0">
@@ -161,14 +161,14 @@
 
 <style>
     .text-primary {
-        color: #007bff;
+        color: var(--primary-color) !important;
     }
 
     .product-card {
         border-radius: 12px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        background-color: #ffffff;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: var(--card-bg);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     }
 
     .product-card:hover {
@@ -198,22 +198,39 @@
     .btn-outline-success:hover, .btn-outline-danger:hover, .btn-success:hover {
         transform: scale(1.05);
         box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-        background-color: #28a745; /* Light green */
+        background-color: var(--primary-color);
         color: white;
     }
 
     .btn-outline-danger:hover {
-        background-color: #dc3545; /* Light red */
+        background-color: var(--danger-color);
         color: white;
     }
 
     .btn-success {
-        background: linear-gradient(45deg, #28a745, #76d7c4);
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
         color: white;
     }
 
     .container {
-        background-color: #f4f4f4; /* light background */
+        background-color: var(--light-bg);
+    }
+
+    .bg-light {
+        background-color: var(--card-bg) !important;
+    }
+
+    .table {
+        color: var(--text-color);
+    }
+
+    .table th {
+        background-color: var(--dark-bg);
+        color: var(--text-color);
+    }
+
+    .table td {
+        background-color: var(--card-bg);
     }
 </style>
 

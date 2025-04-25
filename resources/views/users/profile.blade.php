@@ -18,72 +18,122 @@
 @section('title', 'User Profile')
 
 @section('content')
-<div class="row justify-content-center mt-5">
-    <div class="col-md-8">
-        <div class="card shadow-lg" style="background-color: #fffef5; border-radius: 15px;">
-            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                <h4 class="mb-0">
-                    <i class="fas fa-user-circle me-2"></i> User Profile
-                </h4>
-                <a href="{{ route('products.basket') }}" class="btn btn-warning text-dark fw-bold">
-                    <i class="fas fa-shopping-basket me-1"></i> View Basket
-                </a>
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card profile-card" data-aos="fade-right">
+                <div class="card-body text-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile" class="rounded-circle mb-3" width="120">
+                    <h4 class="mb-3">{{ $user->name }}</h4>
+                    <p class="text-muted mb-1">{{ $user->email }}</p>
+                    <div class="mt-3">
+                        @foreach($user->roles as $role)
+                        <span class="badge bg-primary m-1">{{ $role->name }}</span>
+                        @endforeach
+                    </div>
+                </div>
             </div>
-
-            <div class="card-body">
-                <table class="table table-hover">
-                    <tr>
-                        <th><i class="fas fa-user me-2 text-success"></i>Name</th>
-                        <td>{{ $user->name }}</td>
-                    </tr>
-                    
-                    <tr>
-                        <th><i class="fas fa-envelope me-2 text-success"></i>Email</th>
-                        <td>{{ $user->email }}</td>
-                    </tr>
-                    <tr>
-                        <th><i class="fas fa-user-tag me-2 text-success"></i>Roles</th>
-                        <td>
-                            @foreach($user->roles as $role)
-                                <span class="badge bg-primary">{{ $role->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><i class="fas fa-key me-2 text-success"></i>Permissions</th>
-                        <td>
-                            @foreach($permissions as $permission)
-                                <span class="badge bg-success">{{ $permission->display_name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><i class="fas fa-wallet me-2 text-success"></i>Credit</th>
-                        <td><span class="fw-bold text-warning">${{ $user->credit }}</span></td>
-                    </tr>
-                  
-                </table>
-
-                <div class="d-flex justify-content-end gap-3">
-                    @if(Auth::user()->hasPermissionTo('admin_users') || Auth::id() == $user->id)
-                        <a class="btn btn-outline-primary" href='{{ route('edit_password', $user->id) }}'>
-                            <i class="fas fa-lock me-1"></i> Change Password
+        </div>
+        <div class="col-md-8">
+            <div class="card" data-aos="fade-left">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">User Information</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th width="200">Name</th>
+                                <td>{{ $user->name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ $user->email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Roles</th>
+                                <td>
+                                    @foreach($user->roles as $role)
+                                    <span class="badge bg-primary">{{ $role->name }}</span>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Permissions</th>
+                                <td>
+                                    @foreach($permissions as $permission)
+                                    <span class="badge bg-info">{{ $permission->name }}</span>
+                                    @endforeach
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{{ route('users_edit', $user->id) }}" class="btn btn-primary me-2">
+                            <i class="fas fa-edit"></i> Edit Profile
                         </a>
-                    @endif
-
-                    @if(Auth::user()->hasPermissionTo('edit_users') || Auth::id() == $user->id)
-                        <a href="{{ route('users_edit', $user->id) }}" class="btn btn-success">
-                            <i class="fas fa-edit me-1"></i> Edit
+                        <a href="{{ route('edit_password', $user->id) }}" class="btn btn-warning">
+                            <i class="fas fa-key"></i> Change Password
                         </a>
-                    @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .profile-card {
+        background-color: var(--card-bg);
+        border: none;
+        box-shadow: var(--card-shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .table {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+    }
+
+    .table th {
+        background-color: var(--dark-bg);
+        color: var(--text-color);
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .table td {
+        border-color: var(--border-color);
+    }
+
+    .badge {
+        transition: all 0.3s ease;
+    }
+
+    .text-muted {
+        color: var(--text-color) !important;
+        opacity: 0.7;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .card-title {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+</style>
 @endsection
-
-
 
 </body>
 </html>

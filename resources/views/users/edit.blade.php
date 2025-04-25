@@ -173,93 +173,143 @@ $(document).ready(function(){
 });
 </script>
 
-<div class="container">
-    <h1 class="text-center mb-4">✏️ Edit Customer</h1>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card" data-aos="fade-up">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Edit User</h4>
+                    
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-    <!-- Display error messages -->
-    @foreach($errors->all() as $error)
-    <div class="alert alert-danger">
-        <strong>Error!</strong> {{$error}}
+                    <form action="{{ route('users_update', $user->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        
+                        <div class="form-group mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                        </div>
+
+                        @if(Auth::user()->hasPermissionTo('admin_users'))
+                        <div class="form-group mb-4">
+                            <label class="form-label d-block">Roles</label>
+                            @foreach($roles as $role)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="roles[]" 
+                                           value="{{ $role->id }}" id="role_{{ $role->id }}"
+                                           {{ $user->roles->contains($role->id) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="role_{{ $role->id }}">
+                                        {{ $role->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="form-label d-block">Permissions</label>
+                            @foreach($permissions as $permission)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="permissions[]" 
+                                           value="{{ $permission->id }}" id="permission_{{ $permission->id }}"
+                                           {{ $user->permissions->contains($permission->id) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="permission_{{ $permission->id }}">
+                                        {{ $permission->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        @endif
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('users_list') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    @endforeach
-
-    <!-- User Edit Form -->
-    <form action="{{ route('users_save', $user->id) }}" method="post" class="p-4 rounded shadow-sm bg-light">
-        {{ csrf_field() }}
-
-        <!-- User Name -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" placeholder="Enter Name" name="name" required value="{{ $user->name }}">
-            </div>
-        </div>
-
-        @can('admin_users')
-        <!-- Roles -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <label for="roles" class="form-label">Roles:</label> 
-                (<a href="#" id="clean_roles"><i class="fas fa-trash-alt"></i> Reset</a>)
-                <select multiple class="form-select" id="roles" name="roles[]">
-                    @foreach($roles as $role)
-                    <option value="{{$role->name}}" {{$role->taken ? 'selected' : ''}}>{{$role->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
-        <!-- Permissions -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <label for="permissions" class="form-label">Direct Permissions:</label> 
-                (<a href="#" id="clean_permissions"><i class="fas fa-trash-alt"></i> Reset</a>)
-                <select multiple class="form-select" id="permissions" name="permissions[]">
-                    @foreach($permissions as $permission)
-                    <option value="{{$permission->name}}" {{$permission->taken ? 'selected' : ''}}>{{$permission->display_name}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        @endcan
-
-        @can('addCredit')
-        <!-- Credit Amount -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <label for="credit" class="form-label">Current Credit: <span class="text-success fw-bold">${{ $user->credit }}</span></label>
-            </div>
-        </div>
-        
-        <div class="row mb-3">
-            <div class="col-12">
-                <form id="add-credit-form" data-user-id="{{ $user->id }}">
-                    <div class="input-group">
-                        <input type="number" class="form-control" name="credit" placeholder="Enter Credit Amount" >
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-plus"></i> Add Credit
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        
-        <!-- <div class="row mb-3">
-            <div class="col-12">
-                <button type="button" id="reset-credit-btn" class="btn btn-warning" data-user-id="{{ $user->id }}">
-                    <i class="fas fa-redo"></i> Reset Credit
-                </button>
-            </div>
-        </div> -->
-        @endcan
-
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-success w-100 mt-3">
-            <i class="fas fa-save"></i> Save Changes
-        </button>
-    </form>
 </div>
 
+<style>
+    .card {
+        background-color: var(--card-bg);
+        border: none;
+        box-shadow: var(--card-shadow);
+    }
+
+    .form-control {
+        background-color: var(--input-bg);
+        border-color: var(--border-color);
+        color: var(--text-color);
+    }
+
+    .form-control:focus {
+        background-color: var(--input-bg);
+        border-color: var(--primary-color);
+        color: var(--text-color);
+        box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.25);
+    }
+
+    .form-label {
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .form-check-label {
+        color: var(--text-color);
+    }
+
+    .form-check-input {
+        background-color: var(--input-bg);
+        border-color: var(--border-color);
+    }
+
+    .form-check-input:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .alert-danger {
+        background-color: var(--danger-bg);
+        border-color: var(--danger-color);
+        color: var(--danger-text);
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .card-title {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+</style>
 @endsection
 
 </body>
