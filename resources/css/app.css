@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@import 'admin-lte/dist/css/adminlte.min.css';
+
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+
+.dark-mode {
+    @import 'admin-lte/dist/css/alt/adminlte.dark.min.css';
+    
+    .main-sidebar {
+        background-color: #343a40 !important;
+    }
+    
+    .brand-link {
+        border-bottom: 1px solid #4b545c;
+    }
+}

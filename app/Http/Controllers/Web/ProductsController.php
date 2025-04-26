@@ -242,7 +242,15 @@ public function addstock(Request $request, product $product)
     $product->save();
 
     return redirect()->back()->with('success', 'Stock updated successfully!');
+
 }
+    // In your HomeController or relevant controller
+   public function index()
+   {
+    $products = Product::where('featured', true)->take(3)->get();
+    return view('home', compact('products'));
+}
+
 
 
 

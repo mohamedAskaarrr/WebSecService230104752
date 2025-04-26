@@ -28,7 +28,7 @@
 <div class="container py-4">
     <div class="row align-items-center mb-3">
         <div class="col-md-10">
-            <h1 class="text-success">🛍️ Products</h1>
+            <h1 >🛍️ Products</h1>
         </div>
         <div class="col-md-2">
             @can('add_products')
@@ -84,30 +84,31 @@
                 <div class="col-lg-4 mb-3 mb-lg-0">
                     <img src="{{ asset('images/' . $product->photo) }}" class="img-fluid rounded shadow-sm product-img" alt="{{ $product->name }}">
                 </div>
-                <div class="col-lg-8">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h3 class="text-primary">{{ $product->name }}</h3>
-                        <div class="d-flex gap-2">
-                            @can('edit_products')
-                            <a href="{{ route('products_edit', $product->id) }}" class="btn btn-outline-success">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            @endcan
-                            @can('delete_products')
-                            <a href="{{ route('products_delete', $product->id) }}" class="btn btn-outline-danger">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </a>
-                            @endcan
-                        </div>
-                    </div>
-                    <table class="table table-bordered table-sm">
-                        <tr><th>Name</th><td>{{ $product->name }}</td></tr>
-                        <tr><th>Model</th><td>{{ $product->model }}</td></tr>
-                        <tr><th>Code</th><td>{{ $product->code }}</td></tr>
-                        <tr><th>Price</th><td>${{ $product->price }}</td></tr>
-                        <tr><th>Description</th><td>{{ $product->description }}</td></tr>
-                        <tr><th>Stock</th><td>{{ $product->available_stock }}  
-                            
+                <div class="col-lg-8 product-details-box">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="product-title">{{ $product->name }}</h3>
+        <div class="d-flex gap-2">
+            @can('edit_products')
+            <a href="{{ route('products_edit', $product->id) }}" class="btn btn-outline-light btn-sm">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            @endcan
+            @can('delete_products')
+            <a href="{{ route('products_delete', $product->id) }}" class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-trash-alt"></i> Delete
+            </a>
+            @endcan
+        </div>
+    </div>
+
+    <table class="table table-sm table-borderless text-light">
+        <tr><th>Name</th><td>{{ $product->name }}</td></tr>
+        <tr><th>Model</th><td>{{ $product->model }}</td></tr>
+        <tr><th>Code</th><td>{{ $product->code }}</td></tr>
+        <tr><th>Price</th><td>${{ $product->price }}</td></tr>
+        <tr><th>Description</th><td>{{ $product->description }}</td></tr>
+        <tr><th>Stock</th><td>{{ $product->available_stock }}</td></tr>
+
                         <!-- <form action="{{ route('products.addstock', $product->id) }}" method="POST"> -->
                         @csrf
                         <div class="col-6">
@@ -160,20 +161,36 @@
 </div>
 
 <style>
-    .text-primary {
-        color: var(--primary-color) !important;
+    :root {
+        --primary-color: #f5f5f5; /* Light Text */
+        --secondary-color: #c6a47e; /* Gold Accent */
+        --card-bg: #3a2828; /* Darker than body */
+        --light-bg: #2c1e1e; /* Page Background */
+        --danger-color: #a94442; /* Soft Red */
+        --text-color: #f5f5f5; /* Text Everywhere */
+        --dark-bg: #1c1212; /* Table Headers */
+    }
+
+    body {
+        background-color: var(--light-bg);
+        font-family: 'Roboto', sans-serif;
+        color: var(--text-color);
+    }
+
+    h1, h3 {
+        color: var(--secondary-color);
     }
 
     .product-card {
         border-radius: 12px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
         background-color: var(--card-bg);
-        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .product-card:hover {
         transform: scale(1.03);
-        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
     }
 
     .product-img {
@@ -191,29 +208,26 @@
         border-radius: 25px;
         padding: 10px 20px;
         font-size: 14px;
-        transition: background-color 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        color: var(--text-color);
+        border: 2px solid var(--secondary-color);
     }
 
     .btn-outline-success:hover, .btn-outline-danger:hover, .btn-success:hover {
+        background-color: var(--secondary-color);
+        color: #2c1e1e;
         transform: scale(1.05);
-        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-        background-color: var(--primary-color);
-        color: white;
+    }
+
+    .btn-success {
+        background: linear-gradient(45deg, var(--secondary-color), #b89b76);
+        border: none;
     }
 
     .btn-outline-danger:hover {
         background-color: var(--danger-color);
-        color: white;
-    }
-
-    .btn-success {
-        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        color: white;
-    }
-
-    .container {
-        background-color: var(--light-bg);
+        color: #fff;
     }
 
     .bg-light {
@@ -232,7 +246,58 @@
     .table td {
         background-color: var(--card-bg);
     }
+
+    input.form-control, select.form-select {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+        border: 1px solid var(--secondary-color);
+    }
+
+    input.form-control::placeholder {
+        color: #d6c6c6;
+    }
+
+
+
+    .product-details-box {
+    background-color: #3e2c2c;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: #f5f5f5;
+    transition: background-color 0.3s ease;
+}
+
+.product-details-box:hover {
+    background-color:rgb(51, 36, 36);
+}
+
+.product-title {
+    color: #fdd9a0;
+    font-weight: 600;
+}
+
+.table th {
+    width: 30%;
+    color:rgb(101, 76, 76);
+}
+
+.table td {
+    color: #ffffff;
+}
+
+.btn-outline-light {
+    border-color: #cccccc;
+    color: #cccccc;
+}
+
+.btn-outline-light:hover {
+    background-color:rgba(197, 48, 48, 0.06);
+    color: #ffffff;
+}
+
 </style>
+
 
 @endsection
 </body>

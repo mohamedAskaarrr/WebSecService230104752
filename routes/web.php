@@ -3,6 +3,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\ProductsController;
 use App\Http\Controllers\Web\UsersController;
+use App\Http\Controllers\Web\HomeController;
 
 Route::get('register', [UsersController::class, 'register'])->name('register');
 Route::post('register', [UsersController::class, 'doRegister'])->name('do_register');
@@ -44,6 +45,13 @@ Route::post('/products/{product}/stock', [ProductsController::class, 'addstock']
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', function () {
+    return view('home');
+});
+// routes/web.php
+Route::get('/', [ProductsController::class, 'index'])->name('home');
+
+
 
 Route::get('/multable', function (Request $request) {
     $j = $request->number??5;

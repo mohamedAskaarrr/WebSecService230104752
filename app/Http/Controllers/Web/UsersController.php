@@ -375,7 +375,7 @@ public function redirectToGoogle()
         // Clear any existing session before logging in
         Auth::logout();
         
-        // Log in the user
+        // Log in the user 
         Auth::login($user);
     
         return redirect('/');
