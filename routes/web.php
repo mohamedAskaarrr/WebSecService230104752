@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\ProductsController;
 use App\Http\Controllers\Web\UsersController;
 use App\Http\Controllers\Web\HomeController;
+use Illuminate\Support\Facades\DB;
 
 
 Route::get('register', [UsersController::class, 'register'])->name('register');
