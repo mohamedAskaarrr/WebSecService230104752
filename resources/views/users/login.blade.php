@@ -57,8 +57,8 @@ class=
 
 
       
-      <div class="text-center mt-3">
-        <small>Don't have an account? <a href="{{ route('register') }}">Register here</a></small>
+      <div class="text-center mt-3 class=btn btn-primary">
+        <small>Don't have an account? <a href="{{ route('register') }} class=btn btn-primary">Register here</a></small>
       </div>
     </div>
   </div>
@@ -71,8 +71,37 @@ class=
   
   <!-- Include FontAwesome Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <div class="input-group">
+    <input type="text" id="username" class="input-field" placeholder=" ">
+    <label for="username" class="input-label">Username</label>
+</div>
+
+<div class="input-group">
+    <input type="email" id="email" class="input-field" placeholder=" ">
+    <label for="email" class="input-label">Email</label>
+</div>
+
   
   <style>
+
+.input-field {
+    width: 100%;
+    padding: 1.2rem 1rem 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: 0 0 2px #4ecdcd, 0 0 20px #4ecdcd;
+    background: #1e272e;
+    transform: translateY(-2px);
+}
     body {
       background-color: #f5f5f5;
       font-family: 'Arial', sans-serif;
@@ -114,4 +143,8 @@ class=
       text-decoration: underline;
     }
   </style>
+
+
+
+
 @endsection

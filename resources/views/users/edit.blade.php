@@ -190,7 +190,7 @@ $(document).ready(function(){
                         </div>
                     @endif
 
-                    <form action="{{ route('users_update', $user->id) }}" method="POST">
+                    <form action="{{ route('users_edit', $user->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         
