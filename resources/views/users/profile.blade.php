@@ -69,6 +69,7 @@
                     <div class="mt-4">
                         <a href="{{ route('users_edit', $user->id) }}" class="btn btn-primary me-2">
                             <i class="fas fa-edit"></i> Edit Profile
+                            @method('PUT')
                         </a>
                         <a href="{{ route('edit_password', $user->id) }}" class="btn btn-warning">
                             <i class="fas fa-key"></i> Change Password

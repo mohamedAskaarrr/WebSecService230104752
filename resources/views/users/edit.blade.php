@@ -235,7 +235,7 @@ $(document).ready(function(){
                         @endif
 
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('users_list') }}" class="btn btn-secondary">
+                            <a href="{{ route('users') }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i> Back
                             </a>
                             <button type="submit" class="btn btn-primary">

@@ -44,9 +44,13 @@
                             <a href="{{ route('profile', $user->id) }}" class="btn btn-sm btn-info me-2">
                                 <i class="fas fa-eye"></i> View
                             </a>
+
                             @can('edit_users')
+                            @method('PUT')
                             <a href="{{ route('users_edit', $user->id) }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-edit"></i> Edit
+                              
+                                
                             </a>
                             @endcan
                             @can('delete_users')
