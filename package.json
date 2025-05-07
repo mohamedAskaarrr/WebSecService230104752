@@ -12,6 +12,10 @@
         "laravel-vite-plugin": "^1.2.0",
         "postcss": "^8.4.47",
         "tailwindcss": "^3.4.13",
-        "vite": "^6.0.11"
+        "vite": "^6.3.3"
+    },
+    "dependencies": {
+        "admin-lte": "^4.0.0-beta3",
+        "alpinejs": "^3.14.9"
     }
 }

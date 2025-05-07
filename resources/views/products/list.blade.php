@@ -42,7 +42,8 @@
     <form class="mb-4 p-3 rounded shadow-sm bg-light">
         <div class="row g-2">
             <div class="col-sm-2">
-                <input name="keywords" type="text" class="form-control" placeholder="Search Keywords" value="{{ request()->keywords }}" />
+            <input name="keywords" type="text" class="form-control" placeholder="Search Keywords" value="{{ request()->keywords }} 
+                                                                                                                                      <span> {{!! request()->keywords!!}}</span> " />
             </div>
             <div class="col-sm-2">
                 <input name="min_price" type="number" class="form-control" placeholder="Min Price" value="{{ request()->min_price }}" />
@@ -51,23 +52,7 @@
                 <input name="max_price" type="number" class="form-control" placeholder="Max Price" value="{{ request()->max_price }}" />
             </div>
             <div class="col-sm-2">
-                <select name="order_by" class="form-select">
-                    <option value="" disabled {{ request()->order_by == '' ? 'selected' : '' }}>Order By</option>
-                    <option value="name" {{ request()->order_by == 'name' ? 'selected' : '' }}>Name</option>
-                    <option value="price" {{ request()->order_by == 'price' ? 'selected' : '' }}>Price</option>
-                </select>
-            </div>
-            <div class="col-sm-2">
-                <select name="order_direction" class="form-select">
-                    <option value="" disabled {{ request()->order_direction == '' ? 'selected' : '' }}>Order Direction</option>
-                    <option value="ASC" {{ request()->order_direction == 'ASC' ? 'selected' : '' }}>ASC</option>
-                    <option value="DESC" {{ request()->order_direction == 'DESC' ? 'selected' : '' }}>DESC</option>
-                </select>
-            </div>
-            <div class="col-sm-1">
-                <button type="submit" class="btn btn-success w-100">
-                    <i class="fas fa-search"></i> Go
-                </button>
+                <select name="order_by" class="form-select">s
             </div>
             <div class="col-sm-1">
                 <a href="{{ route('products_list') }}" class="btn btn-outline-danger w-100">

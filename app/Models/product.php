@@ -11,7 +11,8 @@ class Product extends Model  {
         'price',
         'model',
         'description',
-        'photo'
+        'photo',
+        'featured'
     ];
     public function basket()
 {

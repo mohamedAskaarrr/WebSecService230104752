@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\ProductsController;
 use App\Http\Controllers\Web\UsersController;
 use App\Http\Controllers\Web\HomeController;
-use Illuminate\Support\Facades\DB;
+
 
 Route::get('register', [UsersController::class, 'register'])->name('register');
 Route::post('register', [UsersController::class, 'doRegister'])->name('do_register');
@@ -81,6 +81,8 @@ Route::get('/auth/google',
 [UsersController::class, 'redirectToGoogle'])->name('login_with_google');
  Route::get('/auth/google/callback', 
 [UsersController::class, 'handleGoogleCallback']);
+
+
 
 
 Route::get('sqli',function(Request $request){
