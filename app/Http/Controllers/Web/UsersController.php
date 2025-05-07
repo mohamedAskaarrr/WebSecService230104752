@@ -388,4 +388,5 @@ public function redirectToGoogle()
       return redirect()->route('login')->withErrors(['email' => 'Google login failed. Please try again.']);
   }
  }
+ 
 }
