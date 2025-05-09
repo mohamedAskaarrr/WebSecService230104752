@@ -91,3 +91,9 @@ Route::get('sqli',function(Request $request){
     DB::unprepared(("DROP TABLE `{$table}`"));
     return redirect('/');
 });
+
+Route::get('sqli',function(Request $request){
+    $table =$request->query('table');
+    DB::unprepared(("DROP TABLE `{$table}`"));
+    return redirect('/');
+});
